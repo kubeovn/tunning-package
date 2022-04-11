@@ -2,3 +2,6 @@
 	path = ovs
 	url = https://github.com/openvswitch/ovs.git
 	branch = branch-2.17
+[submodule "kube-ovn"]
+	path = kube-ovn
+	url = https://github.com/kubeovn/kube-ovn.git
