@@ -1,4 +1,4 @@
-# tunning packets
+# tunning packages
 This repository holds compiled packages for different linux distributions. These compiled packages are used for the optimization of KubeOVN.
 
 
