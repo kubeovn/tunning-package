@@ -49,13 +49,16 @@ The following optimisation options are available now:
 
    ```bash
    # for centos
-   $ wget https://github.com/lut777/tunning-packets/raw/master/rhel/centos7/${VERSION}/kube_ovn_fastpath.ko
+   $ wget https://github.com/kubeovn/tunning-packets/raw/master/rhel/centos7/${VERSION}/kube_ovn_fastpath.ko
+   
    ```
 
    Then insert module into system:
 
    ```bash
+   # for centos
    $ insmod ./kube_ovn_fastpath.ko
+   
    ```
 
    Use `dmesg` to verify the module:
@@ -74,22 +77,40 @@ The following optimisation options are available now:
    Also choose the right version for your distribution  and download the package.
 
    ```bash
+   # for centos
    $ wget https://github.com/lut777/tunning-packets/raw/master/rhel/centos7/${VERSION}/openvswitch-kmod-2.17.2-1.el7.x86_64.rpm
+   
+   # for ubuntu
+   $ wget https://github.com/kubeovn/tunning-package/raw/main/debian/${UBUNTU-DISTRI}/${VERSION}/extra.tar.gz
    ```
-
+   
    Then install the RPM package:
 
    ```bash
+   # for centos
    $ rpm -i openvswitch-kmod-2.17.2-1.el7.x86_64.rpm
+   
+   # for ubuntu
+   tar -zvxf ./ovs.tar.gz
+   cd ./ovs/
+   make install
+   make modules_install
+   cat > /etc/depmod.d/openvswitch.conf << EOF
+   override openvswitch * extra
+   override vport-* * extra
+   EOF
+   depmod -a
+   cp debian/openvswitch-switch.init /etc/init.d/openvswitch-switch
+   /etc/init.d/openvswitch-switch force-reload-kmod
    ```
-
+   
    Verify the module:
-
+   
    ```bash
    $ modprobe -c | grep vport | grep stt
    alias xxxxxxxx. vport_stt
    ```
-
+   
    If the installation is smooth and verification passes, then the module is installed.
 
 
